@@ -1,4 +1,32 @@
+html {
+  width: 100%;
+  min-width: 500px;
+}
+
+body {
+  width: 100%;
+}
+
 .side-bar {
   background-color: #393a44;
   min-width: 200px;
+}
+
+.table tr:first-of-type td{
+  border-top: none;
+}
+
+
+/* media query for larger screens */
+
+@media screen and (max-width: 865px) {
+  html {
+    font-size: .75rem;
+  }
+
+  div.side-bar{
+    width:100%;
+    max-width: 100% !important;
+    flex: none;
+  }
 }
