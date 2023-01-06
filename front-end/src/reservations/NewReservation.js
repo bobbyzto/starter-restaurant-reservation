@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import ErrorAlert from "../layout/ErrorAlert";
-
-// show reservation form:
 import { createReservation } from "../utils/api";
 import ReservationForm from "./ReservationForm";
 
 export default function NewReservation() {
-  const history = useHistory();
-
   const initialState = {
     first_name: "",
     last_name: "",
@@ -20,6 +16,8 @@ export default function NewReservation() {
 
   const [reservation, setReservation] = useState(initialState);
   const [error, setError] = useState(null);
+
+  const history = useHistory();
 
   function submitHandler(event) {
     event.preventDefault();
