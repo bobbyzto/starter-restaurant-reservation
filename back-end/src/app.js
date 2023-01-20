@@ -12,8 +12,19 @@ const tablesRouter = require("./tables/tables.router")
 
 const app = express();
 
-app.use(cors());
+// setting cross origin request url access
+let clientUrl = "";
+process.env.REACT_APP_BASE_URL
+? clientUrl = process.env.REACT_APP_BASE_URL
+: clientUrl = "http://localhost:3000";
+
+// app-level middleware
 app.use(express.json());
+app.use(
+  cors({
+    origin: [clientUrl],
+  })
+);
 
 app.use("/reservations", reservationsRouter);
 app.use("/tables", tablesRouter)
