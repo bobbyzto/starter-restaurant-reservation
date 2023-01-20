@@ -22,7 +22,7 @@ export default function FormTable() {
   }
 
   function capacityHandler({ target: { name, value } }) {
-    setTable((prevState) => ({
+      setTable((prevState) => ({
       ...prevState,
       [name]: Number(value),
     }));
@@ -44,7 +44,7 @@ export default function FormTable() {
       <p>Create A New Table</p>
       <form onSubmit={submitHandler}>
         <div>
-          <div>
+          <div className="form-group">
             <label className="form-label" htmlFor="table_name">
               Table Name
             </label>
@@ -53,7 +53,7 @@ export default function FormTable() {
               id="table_name"
               name="table_name"
               type="text"
-              min="2"
+              minLength="2"
               value={table.table_name}
               onChange={changeHandler}
               required={true}
@@ -63,7 +63,7 @@ export default function FormTable() {
             </small>
           </div>
 
-          <div>
+          <div className="form-group">
             <label className="form-label" htmlFor="capacity">
               Capacity
             </label>

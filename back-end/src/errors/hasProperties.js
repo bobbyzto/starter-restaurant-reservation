@@ -1,0 +1,23 @@
+/**
+ * Validate submissionincoming <input> fields.
+ */
+function hasProperties(...properties) {
+    return function (request, _response, next) {
+        const { data = {} } = request.body;
+        try {
+            properties.forEach((property) => {
+                const value = data[property];
+                if (!value) {
+                    const error = new Error (`A '${property}' property is required.`);
+                    error.status = 400;
+                    throw error;
+                }
+            });
+            next();
+        } catch (error) {
+            next(error);
+        }
+    };
+}
+
+module.exports = hasProperties

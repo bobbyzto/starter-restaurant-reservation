@@ -25,7 +25,7 @@ export default function NewReservation() {
       .then((createdReservation) => {
         const res_date =
           createdReservation.reservation_date.match(/\d{4}-\d{2}-\d{2}/)[0];
-        history.push(`/dashboard?date=` + res_date);
+        history.push(`/dashboard?date=${res_date}`);
       })
       .catch(setError);
   }

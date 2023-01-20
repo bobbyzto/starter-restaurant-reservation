@@ -20,8 +20,6 @@ export default function Dashboard({ date }) {
   // getting the current day in YYYY-MM-DD format
   const today = new Date().toJSON().slice(0, 10);
 
-  //console.log("dashboard.js", dateQuery)
-
   const [dashDate, setDashDate] = useState(dateQuery ? dateQuery : today);
 
   const history = useHistory();
@@ -41,7 +39,7 @@ export default function Dashboard({ date }) {
       .then(setReservations)
       .catch(setReservationsError);
 
-    // listTables(abortController.signal).then(setTables).catch(setTablesError);
+    listTables(abortController.signal).then(setTables).catch(setTablesError);
     return () => abortController.abort();
   }
 
