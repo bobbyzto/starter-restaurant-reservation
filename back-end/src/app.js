@@ -13,10 +13,10 @@ const tablesRouter = require("./tables/tables.router")
 const app = express();
 
 // setting cross origin request url access
-let clientUrl = "";
-process.env.REACT_APP_BASE_URL
-? clientUrl = process.env.REACT_APP_BASE_URL
-: clientUrl = "http://localhost:3000";
+let clientUrl = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+// process.env.REACT_APP_BASE_URL
+// ? clientUrl = process.env.REACT_APP_BASE_URL
+// : clientUrl = "http://localhost:3000";
 
 // app-level middleware
 app.use(express.json());

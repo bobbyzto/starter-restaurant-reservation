@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { listReservations, listTables } from "../utils/api";
-import useQuery from "../utils/useQuery";
-import { next, previous } from "../utils/date-time";
+import { next, previous, today } from "../utils/date-time";
 import ErrorAlert from "../layout/ErrorAlert";
 import Reservations from "../components/Reservations";
 import Tables from "../components/Tables";
@@ -14,14 +13,6 @@ import Tables from "../components/Tables";
  */
 
 export default function Dashboard({ date }) {
-  // determine the date from the parameters if provided
-  const query = useQuery();
-  const dateQuery = query.get("date");
-  // getting the current day in YYYY-MM-DD format
-  const today = new Date().toJSON().slice(0, 10);
-
-  const [dashDate, setDashDate] = useState(dateQuery ? dateQuery : today);
-
   const history = useHistory();
 
   const [reservations, setReservations] = useState([]);
@@ -43,23 +34,26 @@ export default function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
-  const handlePrevious = (event) => {
-    event.preventDefault();
-    history.push(`/dashboard?date=${previous(dashDate)}`);
-    setDashDate(previous(dashDate));
-  };
+  function handleClick({ target }) {
+    let newDate;
+    let useDate;
 
-  const handleNext = (event) => {
-    event.preventDefault();
-    history.push(`/dashboard?date=${next(dashDate)}`);
-    setDashDate(next(dashDate));
-  };
+    if (!date) {
+      useDate = today();
+    } else {
+      useDate = date;
+    }
 
-  const handleToday = (event) => {
-    event.preventDefault();
-    setDashDate(today);
-    history.push(`/dashboard?date=${today}`);
-  };
+    if (target.name === "previous") {
+      newDate = previous(useDate);
+    } else if (target.name === "next") {
+      newDate = next(useDate);
+    } else {
+      newDate = today();
+    }
+
+    history.push(`/dashboard?date=${newDate}`);
+  }
 
   const tableList = tables.map((table) => (
     <Tables loadDashboard={loadDashboard} key={table.table_id} table={table} />
@@ -119,17 +113,18 @@ export default function Dashboard({ date }) {
       <div className="row">
         <div className="btn-group col" role="group" aria-label="Basic example">
           <button
+            name="previous"
             type="button"
             className="btn btn-info"
-            onClick={handlePrevious}
+            onClick={handleClick}
           >
             <span className="oi oi-chevron-left"></span>
             &nbsp;Previous
           </button>
-          <button type="button" className="btn btn-info" onClick={handleToday}>
+          <button name="today" type="button" className="btn btn-info" onClick={handleClick}>
             Today
           </button>
-          <button type="button" className="btn btn-info" onClick={handleNext}>
+          <button name="next" type="button" className="btn btn-info" onClick={handleClick}>
             Next&nbsp;
             <span className="oi oi-chevron-right"></span>
           </button>
