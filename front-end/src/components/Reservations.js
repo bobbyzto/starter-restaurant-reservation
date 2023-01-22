@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { cancelReservation } from "../utils/api";
 
 export default function Reservations({ reservation, loadDashboard }) {
@@ -30,6 +30,20 @@ export default function Reservations({ reservation, loadDashboard }) {
     return null;
   };
 
+  // const handleSeat = () => {
+  //   const confirmBox = window.confirm(
+  //     "Do you want to seat this reservation? This cannot be undone."
+  //   );
+
+  //   if (confirmBox === true) {
+  //     cancelReservation(reservation, reservation_id)
+  //       .then(() => history.go())
+  //       .catch((error) => console.log("error", error));
+  //   }
+
+  //   return null;
+  // };
+
   return (
     <>
       <tr key={reservation_id}>
@@ -48,20 +62,20 @@ export default function Reservations({ reservation, loadDashboard }) {
         <td>
           {status === "booked" ? (
             <div>
-              <a
-                href={`/reservations/${reservation_id}/seat`}
+              <Link
+                to={`/reservations/${reservation_id}/seat`}
                 type="button"
                 className="btn btn-primary btn-block"
               >
                 Seat
-              </a>
-              <a
-                href={`/reservations/${reservation_id}/edit`}
+              </Link>
+              <Link
+                to={`/reservations/${reservation_id}/edit`}
                 type="button"
                 className="btn btn-secondary btn-block"
               >
                 Edit
-              </a>
+              </Link>
               <button
                 data-reservation-id-cancel={reservation.reservation_id}
                 type="button"
